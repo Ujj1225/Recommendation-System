@@ -39,7 +39,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class RatedMoviesSerializer(serializers.ModelSerializer):
    class Meta:
       model = RatedMovies
-      fields = ['movie','user','rating']
+      fields = ['movie','rating']
 
 class MovieToRecommendSerializer(serializers.ModelSerializer):
    class Meta:

@@ -58,7 +58,7 @@ class RatedMovieView(APIView):
   renderer_classes=[UserRenderer]
   permission_classes = [IsAuthenticated]
   def post(self,request,format=None):
-    serializer = RatedMoviesSerializer(request.data)
+    serializer = RatedMoviesSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     movie = serializer.data.get('movie')
     rating = serializer.data.get('rating')
@@ -78,9 +78,14 @@ class RatedMovieView(APIView):
     
     # calling fuction to generate recommendations and update database MoviesToRecommend
     new_priority_list = priority(final_list, movie, rating)
+    for i in range(len(new_priority_list)):
+      for movie in new_priority_list[i]:
+        if len(movie)!=0:
+          if i==0:
+            MoviesToRecommend.objects.create(user=request,movie=movie,priority='3s')
+          if i==1:
+            MoviesToRecommend.objects.create(user=request,movie=movie,priority='4s')
+          if i==2:
+            MoviesToRecommend.objects.create(user=request,movie=movie,priority='5s')
       #update list
-
-    mov_lst=[1,2,3]
-    movies_query = MovieList.objects.all().filter(pk__in=mov_lst)
-    serializer = MoviesToRecommend(movies_query)
-    return Response(serializer.data,status=status.HTTP_200_OK)
+    return Response({'msg':'successfull'})
