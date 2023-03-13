@@ -219,7 +219,6 @@ def priority(priority_list, new_rated_movie_name, rating):
     #combined list of all movies
     for new_movie in new_rated_movies:
         rate_value = new_movie[5]
-        
         for list_index in range(3):
             for listed_movie in level_of_rated[new_movie[0]][list_index]:
                 
@@ -367,25 +366,4 @@ def recommended_movies(priority_list):
 
     return selected_movies
 
-    #########################################################################################
-
-
-"""
-    selected_movies = {
-                        {movie_name: {"release_date": sth,
-                                                "director": sth,
-                                                "genre": [genre_list],
-                                                "cast": [cast_list]
-                                    }
-                        },
-
-                        {movie_name: {"release_date": sth,
-                                                "director": sth,
-                                                "genre": [genre_list],
-                                                "cast": [cast_list]
-                                    }
-                        }
-                        }
-
-    selected = [list_of_selected_movies_name]
-"""
+#########################################################################################
