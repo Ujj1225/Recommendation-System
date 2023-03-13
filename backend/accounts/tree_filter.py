@@ -218,6 +218,7 @@ def priority(priority_list, new_rated_movie_name, rating):
     #combined list of all movies
     for new_movie in new_rated_movies:
         rate_value = new_movie[5]
+        
         for list_index in range(3):
             for listed_movie in level_of_rated[new_movie[0]][list_index]:
                 
