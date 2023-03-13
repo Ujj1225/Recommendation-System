@@ -6,19 +6,20 @@ from django.conf import settings
 import os
 
 
-def priority(priority_list, new_rated_movies_only):
+def priority(priority_list, new_rated_movie_name, rating):
 
     #REQUIRED VARIABLES CALCULATIONS
     path_read = os.path.join(settings.BASE_DIR, "acounts/files/movie_list.xlsx")
     movie_list = []
+    new_rated_movie_only = []
     new_rated_movies = []
     level_of_rated = {}
     new_priority_list = [[], [], []]
 
   
     #name, 2 similar to 4 similar list
-    for n in range(len(new_rated_movies_only)):
-        level_of_rated.update({new_rated_movies[n]: [[], [], []]})
+    level_of_rated.update({new_rated_movie_name: [[], [], []]})
+    new_rated_movie_only.append(new_rated_movie_name)
 
 
     #loading table from excel
@@ -51,7 +52,7 @@ def priority(priority_list, new_rated_movies_only):
         cast = []
         for column in range(1, movies_sheet.max_column):
             cell = movies_sheet.cell(row, column)
-            if cell.value in new_rated_movies_only:
+            if cell.value in new_rated_movie_only:
                 if column >= 3 and column <= 5 and cell.value != None:
                     genre.append(cell.value)
                 elif column >= 7 and column <= 10 and cell.value != None:
@@ -60,6 +61,7 @@ def priority(priority_list, new_rated_movies_only):
                     particular_movie.append(cell.value)
         particular_movie.append(genre)
         particular_movie.append(cast)
+        particular_movie.append(rating)
         new_rated_movies.append(particular_movie)
 
 
@@ -387,4 +389,3 @@ def recommended_movies(priority_list):
 
     selected = [list_of_selected_movies_name]
     """
-
