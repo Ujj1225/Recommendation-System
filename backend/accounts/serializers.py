@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import User
+from accounts.models import MovieList, MoviesToRecommend, User,RatedMovies
 
 
 
@@ -34,3 +34,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = ['id', 'email', 'name']
+
+
+class RatedMoviesSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = RatedMovies
+      fields = ['movie','user','rating']
+
+class MovieToRecommendSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = MovieList
+      fields = ['id','Title','Year','Genre1','Genre2','Genre3','Director','Cast1','Cast2','Cast3','Cast4']
