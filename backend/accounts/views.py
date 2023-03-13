@@ -8,6 +8,7 @@ from accounts.renderers import UserRenderer
 from accounts.models import MovieList, MoviesToRecommend,RatedMovies
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from .tree_filter import recommended_movies, priority
 
 
 
@@ -74,7 +75,11 @@ class RatedMovieView(APIView):
     for query in query3:
       lst3.append(query.movie)
     final_list=[lst1,lst2,lst3]
+    
     # calling fuction to generate recommendations and update database MoviesToRecommend
+    new_priority_list = priority(final_list, movie, rating)
+      #update list
+
     mov_lst=[1,2,3]
     movies_query = MovieList.objects.all().filter(pk__in=mov_lst)
     serializer = MoviesToRecommend(movies_query)

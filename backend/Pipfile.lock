@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "588e5adfa69c7d0fd8bcb171b8cc63d104aa3c57d03a689cc09e4a824b675859"
+            "sha256": "3d157eaeba3ccdf6c5cddc0055dcf9b7b7e0ead8adc23106d4337cc12f83f5f7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -21,7 +21,7 @@
                 "sha256:71e68008da809b957b7ee4b43dbccff33d1b23519fb8344e33f049897077afac",
                 "sha256:9567dfe7bd8d3c8c892227827c41cce860b368104c3431da67a0c5a65a949506"
             ],
-            "markers": "python_version >= '3.7'",
+            "index": "pypi",
             "version": "==3.6.0"
         },
         "django": {
@@ -46,7 +46,6 @@
                 "sha256:eb63f58c9f218e1a7d064d17a70751f528ed4e1d35547fdade9aaf4cd103fd08"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.6'",
             "version": "==3.14.0"
         },
         "djangorestframework-simplejwt": {
@@ -62,7 +61,7 @@
                 "sha256:8eb9e2bc2f8c97e37a2dc85a09ecdcdec9d8a396530a6d5a33b30b9a92da0c5c",
                 "sha256:a2ba85d1d6a74ef63837eed693bcb89c3f752169b0e3e7ae5b16ca5e1b3deada"
             ],
-            "markers": "python_version >= '3.6'",
+            "index": "pypi",
             "version": "==1.1.0"
         },
         "numpy": {
@@ -96,7 +95,7 @@
                 "sha256:f64bb98ac59b3ea3bf74b02f13836eb2e24e48e0ab0145bbda646295769bd780",
                 "sha256:f9006288bcf4895917d02583cf3411f98631275bc67cce355a7f39f8c14338fa"
             ],
-            "markers": "python_version >= '3.10'",
+            "index": "pypi",
             "version": "==1.24.2"
         },
         "openpyxl": {
@@ -145,7 +144,7 @@
                 "sha256:69285c7e31fc44f68a1feb309e948e0df53259d579295e6cfe2b1792329f05fd",
                 "sha256:d83c3d892a77bbb74d3e1a2cfa90afaadb60945205d1095d9221f04466f64c14"
             ],
-            "markers": "python_version >= '3.7'",
+            "index": "pypi",
             "version": "==2.6.0"
         },
         "python-dateutil": {
@@ -153,7 +152,7 @@
                 "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86",
                 "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "index": "pypi",
             "version": "==2.8.2"
         },
         "pytz": {
@@ -161,6 +160,7 @@
                 "sha256:01a0681c4b9684a28304615eba55d1ab31ae00bf68ec157ec3708a8182dbbcd0",
                 "sha256:78f4f37d8198e0627c5f1143240bb0206b8691d8d7ac6d78fee88b78733f8c4a"
             ],
+            "index": "pypi",
             "version": "==2022.7.1"
         },
         "six": {
@@ -168,7 +168,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "index": "pypi",
             "version": "==1.16.0"
         },
         "sqlparse": {
@@ -176,8 +176,16 @@
                 "sha256:0323c0ec29cd52bceabc1b4d9d579e311f3e4961b98d174201d5622a23b85e34",
                 "sha256:69ca804846bb114d2ec380e4360a8a340db83f0ccf3afceeb1404df028f57268"
             ],
-            "markers": "python_version >= '3.5'",
+            "index": "pypi",
             "version": "==0.4.3"
+        },
+        "tzdata": {
+            "hashes": [
+                "sha256:2b88858b0e3120792a3c0635c23daf36a7d7eeeca657c323da299d2094402a0d",
+                "sha256:fe5f866eddd8b96e9fcba978f8e503c909b19ea7efda11e52e39494bad3a7bfa"
+            ],
+            "markers": "sys_platform == 'win32'",
+            "version": "==2022.7"
         }
     },
     "develop": {}
