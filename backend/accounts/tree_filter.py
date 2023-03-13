@@ -64,6 +64,7 @@ def priority(priority_list, new_rated_movie_name, rating):
     particular_movie.append(rating)
     new_rated_movies.append(particular_movie)
 
+
     #permutations
     perm = [[2, 3, 4, 1], [2, 4, 3, 1], [3, 2, 4, 1], [3, 4, 2, 1], [4, 2, 3, 1], [4, 3, 2, 1]]
 
