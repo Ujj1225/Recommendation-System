@@ -5,17 +5,6 @@ import math
 from django.conf import settings
 import os
 
-#########################################################################################
-
-#FROM SANDESH
-
-priority_list = [["The Dark Knight"], ["The Dark Knight"], ["The Dark Knight"]]
-new_rated_movies = [
-                    ["The Dark Knight", "2000", "Christopher Nolan", ["Action", "Crime", "Drama"], ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine]"], 7]
-                    ]
-
-
-#########################################################################################
 
 def priority(priority_list, new_rated_movies_only):
 
