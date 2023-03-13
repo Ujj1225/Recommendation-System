@@ -9,7 +9,7 @@ import os
 def priority(priority_list, new_rated_movie_name, rating):
 
     #REQUIRED VARIABLES CALCULATIONS
-    path_read = os.path.join(settings.BASE_DIR, "acounts/files/movie_list.xlsx")
+    path_read = os.path.join(settings.BASE_DIR, "accounts/files/movie_list.xlsx")
     movie_list = []
     new_rated_movie_only = []
     new_rated_movies = []
@@ -46,24 +46,26 @@ def priority(priority_list, new_rated_movie_name, rating):
 
 
     #converting table to new_rated_movies categories
+    particular_movie = []
+    genre = []
+    cast = []
     for row in range(2, movies_sheet.max_row + 1):
-        particular_movie = []
-        genre = []
-        cast = []
-        for column in range(1, movies_sheet.max_column):
-            cell = movies_sheet.cell(row, column)
-            if cell.value in new_rated_movie_only:
-                if column >= 3 and column <= 5 and cell.value != None:
-                    genre.append(cell.value)
-                elif column >= 7 and column <= 10 and cell.value != None:
-                    cast.append(cell.value)
-                elif cell.value != None or column == movies_sheet.max_column:
-                    particular_movie.append(cell.value)
-        particular_movie.append(genre)
-        particular_movie.append(cast)
-        particular_movie.append(rating)
-        new_rated_movies.append(particular_movie)
+        cell = movies_sheet.cell(row, 1)
+        if cell.value in new_rated_movie_only:
+            for column in range(1, 11):
+                if column >= 3 and column <= 5 and movies_sheet.cell(row, column).value != None:
+                    genre.append(movies_sheet.cell(row, column).value)
+                elif column >= 7 and column <= 10 and movies_sheet.cell(row, column).value != None:
+                    cast.append(movies_sheet.cell(row, column).value)
+                elif movies_sheet.cell(row, column).value != None:
+                    particular_movie.append(movies_sheet.cell(row, column).value)
+    particular_movie.append(genre)
+    particular_movie.append(cast)
+    particular_movie.append(rating)
+    new_rated_movies.append(particular_movie)
 
+    print(genre)
+    print(particular_movie)
 
     #permutations
     perm = [[2, 3, 4, 1], [2, 4, 3, 1], [3, 2, 4, 1], [3, 4, 2, 1], [4, 2, 3, 1], [4, 3, 2, 1]]
@@ -232,7 +234,7 @@ def priority(priority_list, new_rated_movie_name, rating):
 def recommended_movies(priority_list):
     
     #REQUIRED VARIABLES CALCULATIONS
-    path_read = os.path.join(settings.BASE_DIR, "acounts/files/movie_list.xlsx")
+    path_read = os.path.join(settings.BASE_DIR, "accounts/files/movie_list.xlsx")
     movie_list = []
     selected = []
     selected_movies = {}
@@ -369,8 +371,7 @@ def recommended_movies(priority_list):
     #########################################################################################
 
 
-
-    """
+"""
     selected_movies = {
                         {movie_name: {"release_date": sth,
                                                 "director": sth,
@@ -388,4 +389,4 @@ def recommended_movies(priority_list):
                         }
 
     selected = [list_of_selected_movies_name]
-    """
+"""
