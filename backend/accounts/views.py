@@ -61,7 +61,9 @@ class RatedMovieView(APIView):
     serializer = RatedMoviesSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     movie = serializer.data.get('movie')
+    mov_inst = MovieList.objects.get(pk=movie)
     rating = serializer.data.get('rating')
+    RatedMovies.objects.create(user=request.user,movie=mov_inst,rating=rating)
     query1 = MoviesToRecommend.objects.all().filter(user=request.user,priority='3s')
     lst1=[]
     for query in query1:
@@ -77,7 +79,7 @@ class RatedMovieView(APIView):
     final_list=[lst1,lst2,lst3]
     
     # calling fuction to generate recommendations and update database MoviesToRecommend
-    new_priority_list = priority(final_list, movie, rating)
+    new_priority_list = priority(final_list, movie,rating)
     for i in range(len(new_priority_list)):
       for movie in new_priority_list[i]:
         if len(movie)!=0:

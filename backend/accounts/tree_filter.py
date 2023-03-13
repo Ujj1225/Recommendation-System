@@ -9,7 +9,7 @@ import os
 def priority(priority_list, new_rated_movie_name, rating):
 
     #REQUIRED VARIABLES CALCULATIONS
-    path_read = os.path.join(settings.BASE_DIR, "acounts/files/movie_list.xlsx")
+    path_read = os.path.join(settings.BASE_DIR, "accounts/files/movie_list.xlsx")
     movie_list = []
     new_rated_movie_only = []
     new_rated_movies = []
@@ -63,7 +63,6 @@ def priority(priority_list, new_rated_movie_name, rating):
         particular_movie.append(cast)
         particular_movie.append(rating)
         new_rated_movies.append(particular_movie)
-
 
     #permutations
     perm = [[2, 3, 4, 1], [2, 4, 3, 1], [3, 2, 4, 1], [3, 4, 2, 1], [4, 2, 3, 1], [4, 3, 2, 1]]
@@ -232,7 +231,7 @@ def priority(priority_list, new_rated_movie_name, rating):
 def recommended_movies(priority_list):
     
     #REQUIRED VARIABLES CALCULATIONS
-    path_read = os.path.join(settings.BASE_DIR, "acounts/files/movie_list.xlsx")
+    path_read = os.path.join(settings.BASE_DIR, "accounts/files/movie_list.xlsx")
     movie_list = []
     selected = []
     selected_movies = {}
