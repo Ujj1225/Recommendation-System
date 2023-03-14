@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from accounts.serializers import  RatedMoviesSerializer, UserLoginSerializer, UserProfileSerializer, UserRegistrationSerializer
+from accounts.serializers import  MovieToRecommendSerializer, RatedMoviesSerializer, UserLoginSerializer, UserProfileSerializer, UserRegistrationSerializer
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from accounts.models import MovieList, MoviesToRecommend,RatedMovies
@@ -80,9 +80,7 @@ class RatedMovieView(APIView):
     final_list=[lst1,lst2,lst3]
     
     # calling fuction to generate recommendations and update database MoviesToRecommend
-    print(movie)
-    print(rating)
-    print(final_list)
+   
     new_priority_list = priority(final_list, mov_title,rating)
     for i in range(len(new_priority_list)):
       for movie in new_priority_list[i]:
@@ -95,3 +93,26 @@ class RatedMovieView(APIView):
             MoviesToRecommend.objects.create(user=request.user,movie=MovieList.objects.get(Title=movie),priority='5s')
       #update list
     return Response({'msg':'successfull'})
+  
+
+class MovieToRecomendView(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated]
+  def get(self,request,format=None):
+    query1 = MoviesToRecommend.objects.all().filter(user=request.user,priority='3s')
+    lst1=[]
+    for query in query1:
+      lst1.append(query.movie)
+    query2 = MoviesToRecommend.objects.all().filter(user=request.user,priority='4s')
+    lst2=[]
+    for query in query2:
+      lst2.append(query.movie)
+    query3 = MoviesToRecommend.objects.all().filter(user=request.user,priority='5s')
+    lst3=[]
+    for query in query3:
+      lst3.append(query.movie)
+    final_list=[lst1,lst2,lst3]
+    movies_to_recommend = recommended_movies(final_list)
+
+    # serializer = MovieToRecommendSerializer()
+    return Response(movies_to_recommend)
