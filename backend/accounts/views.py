@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 from accounts.serializers import  MovieToRecommendSerializer, RatedMoviesSerializer, UserLoginSerializer, UserProfileSerializer, UserRegistrationSerializer
@@ -95,24 +96,24 @@ class RatedMovieView(APIView):
     return Response({'msg':'successfull'})
   
 
-class MovieToRecomendView(APIView):
+class MovieToRecomendView(ListAPIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
-  def get(self,request,format=None):
-    query1 = MoviesToRecommend.objects.all().filter(user=request.user,priority='3s')
+  serializer_class = MovieToRecommendSerializer
+  def get_queryset(self):
+    query1 = MoviesToRecommend.objects.all().filter(user=self.request.user,priority='3s')
     lst1=[]
     for query in query1:
       lst1.append(query.movie)
-    query2 = MoviesToRecommend.objects.all().filter(user=request.user,priority='4s')
+    query2 = MoviesToRecommend.objects.all().filter(user=self.request.user,priority='4s')
     lst2=[]
     for query in query2:
       lst2.append(query.movie)
-    query3 = MoviesToRecommend.objects.all().filter(user=request.user,priority='5s')
+    query3 = MoviesToRecommend.objects.all().filter(user=self.request.user,priority='5s')
     lst3=[]
     for query in query3:
       lst3.append(query.movie)
     final_list=[lst1,lst2,lst3]
     movies_to_recommend = recommended_movies(final_list)
-
-    # serializer = MovieToRecommendSerializer()
-    return Response(movies_to_recommend)
+    querys_of_movies = MovieList.objects.filter(Title__in=movies_to_recommend)
+    return querys_of_movies
