@@ -6,20 +6,22 @@ from django.conf import settings
 import os
 
 
-def priority(priority_list, new_rated_movie_name, rating):
+#########################################################################################
+
+def priority(priority_list, new_rated_movies_list, rating_list):
 
     #REQUIRED VARIABLES CALCULATIONS
+    #path_read = r"C:\Users\ASUS\Desktop\Recommendation\movie_list.xlsx"
     path_read = os.path.join(settings.BASE_DIR, "accounts/files/movie_list.xlsx")
     movie_list = []
-    new_rated_movie_only = []
-    new_rated_movies = []
+    new_rated_movies_details = []
     level_of_rated = {}
     new_priority_list = [[], [], []]
+    
 
-  
     #name, 2 similar to 4 similar list
-    level_of_rated.update({new_rated_movie_name: [[], [], []]})
-    new_rated_movie_only.append(new_rated_movie_name)
+    for new_rated_movie_name in new_rated_movies_list:
+        level_of_rated.update({new_rated_movie_name: [[], [], []]})
 
 
     #loading table from excel
@@ -46,23 +48,24 @@ def priority(priority_list, new_rated_movie_name, rating):
 
 
     #converting table to new_rated_movies categories
-    particular_movie = []
-    genre = []
-    cast = []
-    for row in range(2, movies_sheet.max_row + 1):
-        cell = movies_sheet.cell(row, 1)
-        if cell.value in new_rated_movie_only:
-            for column in range(1, 11):
-                if column >= 3 and column <= 5 and movies_sheet.cell(row, column).value != None:
-                    genre.append(movies_sheet.cell(row, column).value)
-                elif column >= 7 and column <= 10 and movies_sheet.cell(row, column).value != None:
-                    cast.append(movies_sheet.cell(row, column).value)
-                elif movies_sheet.cell(row, column).value != None:
-                    particular_movie.append(movies_sheet.cell(row, column).value)
-    particular_movie.append(genre)
-    particular_movie.append(cast)
-    particular_movie.append(rating)
-    new_rated_movies.append(particular_movie)
+    for n in range(len(new_rated_movies_list)):
+        particular_movie = []
+        genre = []
+        cast = []
+        for row in range(2, movies_sheet.max_row + 1):
+            cell = movies_sheet.cell(row, 1)
+            if cell.value == new_rated_movies_list[n]:
+                for column in range(1, 11):
+                    if column >= 3 and column <= 5 and movies_sheet.cell(row, column).value != None:
+                        genre.append(movies_sheet.cell(row, column).value)
+                    elif column >= 7 and column <= 10 and movies_sheet.cell(row, column).value != None:
+                        cast.append(movies_sheet.cell(row, column).value)
+                    elif movies_sheet.cell(row, column).value != None:
+                        particular_movie.append(movies_sheet.cell(row, column).value)
+        particular_movie.append(genre)
+        particular_movie.append(cast)
+        particular_movie.append(rating_list[n])
+        new_rated_movies_details.append(particular_movie)
 
 
     #permutations
@@ -186,9 +189,9 @@ def priority(priority_list, new_rated_movie_name, rating):
 
     #building all trees of all permutations
     def fixed_build_tree():
-        for p in range(len(new_rated_movies)):
+        for p in range(len(new_rated_movies_details)):
             for m in range(len(movie_list)):
-                if new_rated_movies[p][0] == movie_list[m][0]:
+                if new_rated_movies_details[p][0] == movie_list[m][0]:
                     current_input = movie_list[m]
 
                     fixed_movie_tree = []
@@ -217,7 +220,7 @@ def priority(priority_list, new_rated_movie_name, rating):
     #COMBINING AND PRIORITY ACCORDING TO RATING AND SELECTION
 
     #combined list of all movies
-    for new_movie in new_rated_movies:
+    for new_movie in new_rated_movies_details:
         rate_value = new_movie[5]
         for list_index in range(3):
             for listed_movie in level_of_rated[new_movie[0]][list_index]:
@@ -228,14 +231,15 @@ def priority(priority_list, new_rated_movie_name, rating):
 
     return new_priority_list
 
+#########################################################################################
 
 def recommended_movies(priority_list):
     
     #REQUIRED VARIABLES CALCULATIONS
+    #path_read = r"C:\Users\ASUS\Desktop\Recommendation\movie_list.xlsx"
     path_read = os.path.join(settings.BASE_DIR, "accounts/files/movie_list.xlsx")
     movie_list = []
     selected = []
-    selected_movies = {}
 
 
     #loading table from excel
@@ -277,7 +281,7 @@ def recommended_movies(priority_list):
                 if value in priority_list[0]:
                     priority_list[0].remove(value)
     else:
-        while remaining_selection > 10 - math.floor(len(priority_list[2])/2):
+        while remaining_selection > 10 - math.ceil(len(priority_list[2])/2):
             value = random.choice(priority_list[2])
             if value not in selected:
                 selected.append(value)
@@ -302,7 +306,7 @@ def recommended_movies(priority_list):
                     priority_list[0].remove(value)
     else:
         temp_remaining_selection = copy.deepcopy(remaining_selection)
-        while remaining_selection > temp_remaining_selection - math.floor(len(priority_list[1])/2):
+        while remaining_selection > temp_remaining_selection - math.ceil(len(priority_list[1])/2):
             value = random.choice(priority_list[1])
             if value not in selected:
                 selected.append(value)
@@ -323,7 +327,7 @@ def recommended_movies(priority_list):
                 priority_list[0].remove(value)
     else:
         temp_remaining_selection = copy.deepcopy(remaining_selection)
-        while remaining_selection > temp_remaining_selection - math.floor(len(priority_list[0])/2):
+        while remaining_selection > temp_remaining_selection - math.ceil(len(priority_list[0])/2):
             value = random.choice(priority_list[0])
             if value not in selected:
                 selected.append(value)
@@ -341,29 +345,12 @@ def recommended_movies(priority_list):
 
     random.shuffle(selected)
 
-
-    #making list of dictionaries of selected movies
-    for selected_movie in selected:
-        for movie in movie_list:
-            if selected_movie == movie[0]:
-                genre = []
-                cast = []
-                for gnere_index in range(len(movie[3])):
-                    genre.append(movie[3][gnere_index])
-                for cast_index in range(len(movie[4])):
-                    cast.append(movie[4][cast_index])
-                
-                selected_movies.update({movie[0]: {"release_date": movie[1],
-                                                "director": movie[2],
-                                                "genre": genre,
-                                                "cast": cast}
-                                        })
-                
+ 
     #PRINTING RECOMMENDED MOVIES
     for movies in selected:
         print(movies)
 
 
-    return selected_movies
+    return selected
 
 #########################################################################################
