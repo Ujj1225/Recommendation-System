@@ -81,7 +81,7 @@ class RatedMovieView(APIView):
     
     # calling fuction to generate recommendations and update database MoviesToRecommend
    
-    new_priority_list = priority(final_list, mov_title,rating)
+    new_priority_list = priority(final_list, [mov_title],[rating])
     for i in range(len(new_priority_list)):
       for movie in new_priority_list[i]:
         if len(movie)!=0:
