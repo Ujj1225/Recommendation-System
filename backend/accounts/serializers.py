@@ -37,9 +37,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class RatedMoviesSerializer(serializers.ModelSerializer):
-   class Meta:
-      model = RatedMovies
-      fields = ['movie','rating']
+  class Meta:
+    model = RatedMovies
+    fields = ['movie','rating']
+    
+  def create(self,validate_data):
+    validate_data['movie']=int(validate_data['movie'])
 
 class MovieToRecommendSerializer(serializers.ModelSerializer):
    class Meta:
