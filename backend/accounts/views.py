@@ -98,7 +98,7 @@ class RatedMovieView(APIView):
 
 class MovieToRecomendView(ListAPIView):
   renderer_classes = [UserRenderer]
-  permission_classes = [IsAuthenticated]
+  # permission_classes = [IsAuthenticated]
   serializer_class = MovieToRecommendSerializer
   def get_queryset(self):
     query1 = MoviesToRecommend.objects.all().filter(user=self.request.user,priority='3s')
