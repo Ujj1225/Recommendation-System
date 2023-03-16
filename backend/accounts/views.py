@@ -115,5 +115,5 @@ class MovieToRecomendView(ListAPIView):
       lst3.append(query.movie)
     final_list=[lst1,lst2,lst3]
     movies_to_recommend = recommended_movies(final_list)
-    querys_of_movies = MovieList.objects.filter(Title__in=movies_to_recommend)
-    return querys_of_movies
+    return MovieList.objects.filter(Title__in=movies_to_recommend)
+    
